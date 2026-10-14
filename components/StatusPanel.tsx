@@ -7,7 +7,12 @@ import { Loading, Panel } from '@/components/Shell';
 import { WeeklyResetInput, useWeeklyReset } from '@/components/WeeklyReset';
 import { RANGE_DAYS } from '@/lib/queries/filters';
 import type { TimeWindow } from '@/lib/queries/aggregate';
-import { quotaOverTimeData, quotaOverTimeInputWithResets, weeklyResets } from '@/lib/charts/quotaOverTime';
+import {
+  onWallClock,
+  quotaOverTimeData,
+  quotaOverTimeInputWithResets,
+  weeklyResets,
+} from '@/lib/charts/quotaOverTime';
 import type { QuotaOverTimeRow, WeeklySchedule } from '@/lib/charts/quotaOverTime';
 import type { Status } from '@/lib/status';
 
@@ -35,7 +40,7 @@ function QuotaChart({ rows, resets, span, schedule }: QuotaChartProps) {
   const weekly = weeklyResets(span.start ?? Date.parse(first.t), span.end, schedule);
   return (
     <div className="chart">
-      <Chart data={quotaOverTimeData(rows)} input={quotaOverTimeInputWithResets([...resets, ...weekly], span)} />
+      <Chart data={quotaOverTimeData(onWallClock(rows))} input={quotaOverTimeInputWithResets([...resets, ...weekly], span)} />
     </div>
   );
 }

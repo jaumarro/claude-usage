@@ -1,6 +1,7 @@
 import { createSpec, pipe, mapping, geom, scale, transform } from '@graphysdk/react';
 import { SESSIONS_LAYER, SESSION_TOTALS_LAYER, spanScale } from '@/lib/charts/seriesViews';
 import { seriesHues, type ColorScheme } from '@/lib/charts/theme';
+import { wallClockIso } from '@/lib/charts/wallClock';
 import type { TimeWindow } from '@/lib/queries/aggregate';
 
 /** A bucket a session sent at least one request in. */
@@ -28,18 +29,6 @@ export type SessionsRow = {
 };
 
 export const sessionsColumns = [{ key: 't' }, { key: 'mid' }, { key: 'session' }, { key: 'bar' }, { key: 'spent' }];
-
-function pad(value: number): string {
-  return String(value).padStart(2, '0');
-}
-
-/** Local time in the shape the other time charts' bucket labels take. */
-function localIso(ms: number): string {
-  const at = new Date(ms);
-  const date = `${at.getFullYear()}-${pad(at.getMonth() + 1)}-${pad(at.getDate())}`;
-  const time = `${pad(at.getHours())}:${pad(at.getMinutes())}:${pad(at.getSeconds())}`;
-  return `${date}T${time}`;
-}
 
 /** The branch says what the session worked on, so it comes first; the tooltip cuts the rest short. */
 function sessionLabel(block: SessionBlock): string {
@@ -86,14 +75,14 @@ export function sessionsData(blocks: SessionBlock[]) {
   const rows = blocks.flatMap((block, index): SessionsRow[] => {
     const inset = ((block.to - block.from) * BAR_GAP) / 2;
     const segment = {
-      mid: localIso((block.from + block.to) / 2),
+      mid: wallClockIso((block.from + block.to) / 2),
       session: labelOf(block),
       bar: String(index),
       spent: block.spent,
     };
     return [
-      { t: localIso(block.from + inset), ...segment },
-      { t: localIso(block.to - inset), ...segment },
+      { t: wallClockIso(block.from + inset), ...segment },
+      { t: wallClockIso(block.to - inset), ...segment },
     ];
   });
   return { columns: sessionsColumns, rows };

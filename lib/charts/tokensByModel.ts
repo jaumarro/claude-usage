@@ -1,6 +1,7 @@
 import { annotation, pipe, geom } from '@graphysdk/react';
 import type { ModelMarker } from '@/lib/queries/timeseries';
 import { seriesInput, type TimeView } from '@/lib/charts/seriesViews';
+import { wallClock } from '@/lib/charts/wallClock';
 import type { TimeWindow } from '@/lib/queries/aggregate';
 
 export type TokensByModelRow = {
@@ -63,7 +64,7 @@ export function tokensByModelInputWithMarkers(
         spec,
         geom.rule({
           id: `release-${marker.model}`,
-          aes: { x: { value: marker.at } },
+          aes: { x: { value: wallClock(marker.at) } },
           dataLabels: { showDataLabels: false },
         }),
         annotation.text({

@@ -16,14 +16,16 @@ export type Bucket = (typeof BUCKETS)[number];
 
 /**
  * All buckets resolve in local time. The `today` range starts at local midnight, so a UTC
- * day boundary here would put the first hours of the day in the wrong bucket.
+ * day boundary here would put the first hours of the day in the wrong bucket. The labels carry
+ * the local wall clock marked as UTC, which is how the chart engine prints it unshifted; a day
+ * needs no mark, as a bare date already reads as UTC midnight.
  */
 export const BUCKET_EXPRESSION: Record<Bucket, string> = {
-  minute: "strftime('%Y-%m-%dT%H:%M:00', ts / 1000, 'unixepoch', 'localtime')",
+  minute: "strftime('%Y-%m-%dT%H:%M:00Z', ts / 1000, 'unixepoch', 'localtime')",
   // Floor to a 600s boundary in epoch space, then format: 600 divides every whole-hour
   // UTC offset evenly, so the local bucket edges land on :00, :10, :20 and so on.
-  '10m': "strftime('%Y-%m-%dT%H:%M:00', (CAST(ts / 1000 / 600 AS INTEGER)) * 600, 'unixepoch', 'localtime')",
-  hour: "strftime('%Y-%m-%dT%H:00:00', ts / 1000, 'unixepoch', 'localtime')",
+  '10m': "strftime('%Y-%m-%dT%H:%M:00Z', (CAST(ts / 1000 / 600 AS INTEGER)) * 600, 'unixepoch', 'localtime')",
+  hour: "strftime('%Y-%m-%dT%H:00:00Z', ts / 1000, 'unixepoch', 'localtime')",
   day: "date(ts / 1000, 'unixepoch', 'localtime')",
   week: "date(ts / 1000, 'unixepoch', 'localtime', '-6 days', 'weekday 1')",
 };

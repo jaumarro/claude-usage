@@ -1,4 +1,5 @@
 import { createSpec, geom, mapping, pipe, scale, transform } from '@graphysdk/react';
+import { wallClock } from '@/lib/charts/wallClock';
 import type { Bucket, TimeWindow } from '@/lib/queries/aggregate';
 
 /** Every way a panel can draw its data. The donut is the period's total; the rest run over time. */
@@ -161,5 +162,6 @@ export function spanScale(span?: TimeWindow) {
   if (span === undefined) {
     return scale.x.datetime();
   }
-  return scale.x.datetime({ domainMin: span.start ?? undefined, domainMax: span.end });
+  const start = span.start === null ? undefined : wallClock(span.start);
+  return scale.x.datetime({ domainMin: start, domainMax: wallClock(span.end) });
 }

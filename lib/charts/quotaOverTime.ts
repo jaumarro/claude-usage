@@ -1,5 +1,6 @@
 import { createSpec, pipe, mapping, geom, scale } from '@graphysdk/react';
 import { OVERLAP_LAYER, spanScale } from '@/lib/charts/seriesViews';
+import { wallClock, wallClockIso } from '@/lib/charts/wallClock';
 import type { TimeWindow } from '@/lib/queries/aggregate';
 
 export type QuotaOverTimeRow = {
@@ -13,6 +14,11 @@ export const quotaOverTimeColumns = [{ key: 't' }, { key: 'window' }, { key: 'pc
 
 export function quotaOverTimeData(rows: QuotaOverTimeRow[]) {
   return { columns: quotaOverTimeColumns, rows };
+}
+
+/** Readings are true instants, so each is moved onto the wall clock the axis prints. */
+export function onWallClock(rows: QuotaOverTimeRow[]): QuotaOverTimeRow[] {
+  return rows.map((row) => ({ ...row, t: wallClockIso(Date.parse(row.t)) }));
 }
 
 /** When the seven-day window resets each week, in local time. `weekday` counts from Sunday, as `Date.getDay` does. */
@@ -52,7 +58,7 @@ export function weeklyResets(from: number, to: number, schedule: WeeklySchedule)
 // A rule reads one observation, so each reset boundary needs its own layer. The x constant has to
 // be epoch milliseconds: the datetime scale rejects an ISO string or a Date here.
 function resetMarker(at: number) {
-  return geom.rule({ aes: { x: { value: at }, y: undefined, color: undefined } });
+  return geom.rule({ aes: { x: { value: wallClock(at) }, y: undefined, color: undefined } });
 }
 
 export function quotaOverTimeInputWithResets(resets: readonly number[], span?: TimeWindow) {
