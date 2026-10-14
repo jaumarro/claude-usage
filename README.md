@@ -4,6 +4,8 @@ A local dashboard for where your Claude subscription goes: tokens and API-equiva
 model, effort, project and session, how close the five-hour and weekly limits run, and whether
 the plan pays for itself.
 
+![30 days of Claude Code on a $200 plan: $13.2k at API prices, 35.8b tokens, 307 sessions](docs/screenshots/hero.png)
+
 Everything runs on your machine. It reads the logs Claude Code already writes, keeps its own
 SQLite database in `~/.claude-usage`, and serves on `127.0.0.1` only. Nothing is sent anywhere.
 
@@ -33,6 +35,12 @@ what changed.
 | `tokens_by_effort` | Tokens per effort level |
 | `activity_by_hour` | When in the week the work happens |
 | `tokens_by_session` | Each bucket's sessions, by branch and folder, as stacked bars of tokens |
+
+![Five-hour and weekly limit usage, with the weekly reset marked](docs/screenshots/quota.png)
+
+![Cost by kind of token as stacked bars](docs/screenshots/cost-by-kind.png)
+
+![Each day's sessions as stacked bars of the tokens they spent](docs/screenshots/sessions.png)
 
 Most series panels switch between stacked, 100% and donut views. Range and bucket size are set
 at the top; short ranges can refresh live.
