@@ -1,0 +1,7 @@
+allowBuilds:
+  '@graphysdk/viz-engine': true
+  esbuild: true
+minimumReleaseAgeExclude:
+  - '@graphysdk/react-renderer@1.9.0-beta.1790850980247'
+  - '@graphysdk/react@1.9.0-beta.1790850980247'
+  - '@graphysdk/viz-engine@1.9.0-beta.1790850980247'

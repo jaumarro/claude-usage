@@ -1,0 +1,30 @@
+{
+  "name": "claude-usage",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "next dev -H 127.0.0.1",
+    "build": "next build",
+    "start": "next start -H 127.0.0.1",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@graphysdk/react": "1.9.0-beta.1790850980247",
+    "next": "^15.5.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@graphysdk/viz-engine": "1.9.0-beta.1790850980247",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

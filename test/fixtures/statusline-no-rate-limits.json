@@ -1,0 +1,22 @@
+{
+  "session_id": "b71d0e44-2a55-4d1c-9f83-6e0a7c112fd0",
+  "transcript_path": "/Users/j/.claude/projects/-Users-j-projects/b71d0e44.jsonl",
+  "cwd": "/Users/j/projects/claude-usage",
+  "model": { "id": "claude-fable-5-1", "display_name": "Fable 5.1" },
+  "workspace": {
+    "current_dir": "/Users/j/projects/claude-usage",
+    "project_dir": "/Users/j/projects/claude-usage",
+    "added_dirs": []
+  },
+  "version": "2.1.252",
+  "output_style": { "name": "default" },
+  "context_window": {
+    "total_input_tokens": 0,
+    "total_output_tokens": 0,
+    "context_window_size": 200000,
+    "current_usage": null,
+    "used_percentage": null,
+    "remaining_percentage": null
+  },
+  "thinking": { "enabled": false }
+}

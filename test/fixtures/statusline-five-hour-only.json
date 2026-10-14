@@ -1,0 +1,30 @@
+{
+  "session_id": "c92f3ab0-7d18-4b60-a4e2-51b9c8f30d7a",
+  "transcript_path": "/Users/j/.claude/projects/-Users-j-projects/c92f3ab0.jsonl",
+  "cwd": "/Users/j/projects/claude-usage",
+  "model": { "id": "claude-opus-5", "display_name": "Opus 5" },
+  "workspace": {
+    "current_dir": "/Users/j/projects/claude-usage",
+    "project_dir": "/Users/j/projects/claude-usage",
+    "added_dirs": []
+  },
+  "version": "2.1.252",
+  "output_style": { "name": "default" },
+  "context_window": {
+    "total_input_tokens": 51002,
+    "total_output_tokens": 640,
+    "context_window_size": 200000,
+    "current_usage": {
+      "input_tokens": 210,
+      "output_tokens": 640,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 50792
+    },
+    "used_percentage": 25.5,
+    "remaining_percentage": 74.5
+  },
+  "rate_limits": {
+    "five_hour": { "used_percentage": 97, "resets_at": 1788523200 }
+  },
+  "prompt_cache": { "warm": false, "requests": 12, "misses": 12 }
+}

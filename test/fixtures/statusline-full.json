@@ -1,0 +1,60 @@
+{
+  "session_id": "3f8a1c2e-9b4d-4a71-8e0f-2c6d5b4a1093",
+  "transcript_path": "/Users/j/.claude/projects/-Users-j-projects/3f8a1c2e.jsonl",
+  "cwd": "/Users/j/projects/claude-usage",
+  "model": { "id": "claude-opus-5", "display_name": "Opus 5" },
+  "workspace": {
+    "current_dir": "/Users/j/projects/claude-usage",
+    "project_dir": "/Users/j/projects/claude-usage",
+    "added_dirs": [],
+    "repo": { "host": "github.com", "owner": "example", "name": "claude-usage" }
+  },
+  "version": "2.1.252",
+  "output_style": { "name": "default" },
+  "context_window": {
+    "total_input_tokens": 92341,
+    "total_output_tokens": 1204,
+    "context_window_size": 200000,
+    "current_usage": {
+      "input_tokens": 412,
+      "output_tokens": 1204,
+      "cache_creation_input_tokens": 18320,
+      "cache_read_input_tokens": 73609
+    },
+    "used_percentage": 46.2,
+    "remaining_percentage": 53.8
+  },
+  "effort": { "level": "high" },
+  "thinking": { "enabled": true },
+  "rate_limits": {
+    "five_hour": { "used_percentage": 26.4, "resets_at": 1788523200 },
+    "seven_day": { "used_percentage": 62, "resets_at": 1788912000 },
+    "spend_limit": { "used_percentage": 11.5, "resets_at": 1791158400 }
+  },
+  "prompt_cache": {
+    "warm": true,
+    "caching_observed": true,
+    "ttl": "1h",
+    "expires_at": 1788513346,
+    "requests": 41,
+    "misses": 3,
+    "expected_rebuilds": 0,
+    "hit_ratio": 0.926,
+    "cache_write_tokens": 18320,
+    "miss_recache_tokens": 4100,
+    "last_miss_at": 1788509100,
+    "recache_tokens_if_cold": 91000
+  },
+  "pr": {
+    "number": 412,
+    "url": "https://github.com/example/claude-usage/pull/412",
+    "review_state": "changes_requested"
+  },
+  "worktree": {
+    "name": "agent-a65b9b05",
+    "path": "/Users/j/projects/claude-usage/.claude/worktrees/agent-a65b9b05",
+    "branch": "feat/quota-status",
+    "original_cwd": "/Users/j/projects/claude-usage",
+    "original_branch": "main"
+  }
+}

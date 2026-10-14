@@ -1,0 +1,407 @@
+:root {
+  --bg: #0a0d10;
+  --surface: #11151a;
+  --border: #1f262e;
+  --chrome: #232b34;
+  --text: #d6dee8;
+  --dim: #7d8794;
+  --accent: #7ce38b;
+  --warn: #ffb86c;
+  --danger: #ff7eb6;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+  --tile: #0d1116;
+  color-scheme: dark;
+}
+
+/* Status inks are a step darker than the dark ones: every ink clears 4.5:1 on the surface and
+   the tiles. Chart tokens mirror these in lib/charts/theme.ts. */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #eef0f2;
+    --surface: #fcfcfb;
+    --border: #dfe3e8;
+    --chrome: #ccd3da;
+    --text: #1c2127;
+    --dim: #5f6873;
+    --accent: #1a7f37;
+    --warn: #9a6700;
+    --danger: #bf3989;
+    --tile: #f5f6f7;
+    color-scheme: light;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(var(--chrome) 1px, transparent 1px),
+    linear-gradient(90deg, var(--chrome) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.28;
+  mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 30%, transparent 75%);
+}
+
+.shell {
+  position: relative;
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 0 24px 72px;
+}
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 0 14px;
+  /* Opaque, not the page --bg: the fixed grid wash sits behind the shell, and a
+     translucent bar would let panels scroll through the controls. */
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.prompt {
+  color: var(--accent);
+}
+
+.masthead h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.masthead .meta {
+  margin-left: auto;
+  color: var(--dim);
+  font-size: 11px;
+}
+
+/* A chart's minimum height, carried across by its aspect ratio, is a minimum width of 800px,
+   and a plain 1fr column grows to fit its content's minimum. */
+.grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.panel {
+  grid-column: span 12;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.panel > header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.panel > header .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 18%, transparent);
+}
+
+.panel > header .views {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.seg.view {
+  margin-top: 0;
+  padding: 1px 7px;
+  color: var(--dim);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.seg.view.on {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.panel > header .reset-at {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  color: var(--dim);
+  font-size: 10px;
+}
+
+.seg.stamp {
+  margin-top: 0;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* A full-width panel is exactly twice a half-width one, so 8:3 resolves to the same height
+   as 4:3 does at half the width. Charts in both column widths line up. The width is pinned
+   because an auto one is widened by the minimum height through the ratio. */
+.chart {
+  width: 100%;
+  aspect-ratio: 8 / 3;
+  min-height: 300px;
+}
+
+.panel.half .chart {
+  aspect-ratio: 4 / 3;
+  min-height: 260px;
+}
+
+/* The engine pins a value pill to every rule, and a vertical rule on a date axis can only fill it
+   with "–": its epoch x goes through the axis's date format. The markers name themselves in a
+   text annotation instead. */
+.chart [data-geom='rule'] > svg {
+  display: none;
+}
+
+.panel .body {
+  padding: 10px;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.stat {
+  background: var(--tile);
+  padding: 10px 12px;
+}
+
+.stat .k {
+  color: var(--dim);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stat .v {
+  margin-top: 2px;
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.stat .v.accent {
+  color: var(--accent);
+}
+
+.stat .v.warn {
+  color: var(--warn);
+}
+
+.note {
+  margin-top: 14px;
+  color: var(--dim);
+  font-size: 11px;
+  border-left: 2px solid var(--chrome);
+  padding-left: 12px;
+}
+
+@media (min-width: 1180px) {
+  .panel.half {
+    grid-column: span 6;
+  }
+}
+
+.seg {
+  margin-top: 2px;
+  max-width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--chrome);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 8px;
+}
+
+.seg:focus-visible {
+  outline: 1px solid var(--accent);
+}
+
+.seg:not(:disabled) {
+  cursor: pointer;
+}
+
+.seg:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.seg.refresh {
+  font-size: 18px;
+  line-height: 1;
+  padding: 2px 9px;
+}
+
+.seg.refresh.busy {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.refresh-icon {
+  display: inline-block;
+  transition: transform 200ms ease;
+}
+
+.seg.refresh:hover:not(:disabled) .refresh-icon {
+  transform: rotate(90deg);
+}
+
+.seg.refresh.busy .refresh-icon {
+  animation: spin 0.6s linear infinite;
+}
+
+.loading {
+  display: grid;
+  place-items: center;
+  height: 100%;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--chrome);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.masthead .controls {
+  margin-left: auto;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.filter > span {
+  color: var(--dim);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@keyframes dial-fill {
+  from {
+    stroke-dashoffset: 43.98;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.dial-slot {
+  display: flex;
+  align-items: center;
+  padding-bottom: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dial circle {
+    animation: none !important;
+  }
+
+  .spinner,
+  .seg.refresh.busy .refresh-icon {
+    animation-duration: 3s;
+  }
+
+  .refresh-icon {
+    transition: none;
+  }
+}
+
+/* The lead figure gets a wider cell rather than a larger type size: the outsized number
+   read as shouting, and the extra width is enough to set it apart. */
+.stat.hero {
+  grid-column: span 2;
+}
+
+.stat .hint {
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 10px;
+}
+
+/* The theme tokens flip in a single frame when the OS appearance changes; easing everything that
+   reads them turns the flip into a fade. Zero specificity, so an element's own transition wins. */
+:where(*) {
+  transition:
+    background-color 300ms ease,
+    border-color 300ms ease,
+    color 300ms ease;
+}
+
+.panel {
+  transition:
+    background-color 300ms ease,
+    border-color 120ms ease;
+}
+
+.panel:hover {
+  border-color: var(--chrome);
+}
+
+.panel > header {
+  background-color: var(--tile);
+}
+
+.masthead h1 {
+  letter-spacing: -0.01em;
+}
+
