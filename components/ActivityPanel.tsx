@@ -32,7 +32,8 @@ export function ActivityPanel() {
   const [view, setView] = usePanelView('activity_by_hour', VIEWS, 'heatmap');
   const state = useLiveData(`/api/usage/activity?bucket=${bucket}&${query}`, tick, rowsParser(isRow));
 
-  const rows = state.status === 'ready' ? state.data : [];
+  // A week of zeros has no range for the colour key, which then lists 0 twice.
+  const rows = state.status === 'ready' && state.data.some((row) => row.tokens > 0) ? state.data : [];
   // The engine paints a bubble legend's symbols in its own default red whatever colour the dots
   // are, so the key would contradict the chart it explains.
   const chart =
