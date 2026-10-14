@@ -143,10 +143,10 @@ describe('tokensByModelSeries', () => {
     insert.run('hour-2', 'req_hour_2', new Date(2026, 8, 1, 13, 5).getTime(), 7);
 
     expect(tokensByModelSeries(db, 'hour').map((row) => [row.day, row.tokens])).toEqual([
-      ['2026-09-01T10:00:00', 5],
-      ['2026-09-01T11:00:00', 0],
-      ['2026-09-01T12:00:00', 0],
-      ['2026-09-01T13:00:00', 7],
+      ['2026-09-01T10:00:00Z', 5],
+      ['2026-09-01T11:00:00Z', 0],
+      ['2026-09-01T12:00:00Z', 0],
+      ['2026-09-01T13:00:00Z', 7],
     ]);
   });
 });

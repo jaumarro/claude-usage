@@ -10,6 +10,7 @@ import {
   type TimeView,
 } from '@/lib/charts/seriesViews';
 import { BUCKETS } from '@/lib/queries/aggregate';
+import { wallClock } from '@/lib/charts/wallClock';
 import { costByModelData, costByModelInputFor } from '@/lib/charts/costByModel';
 import { tokensByEffortData, tokensByEffortInputFor } from '@/lib/charts/tokensByEffort';
 import { quotaOverTimeData, quotaOverTimeInputWithResets } from '@/lib/charts/quotaOverTime';
@@ -107,8 +108,9 @@ describe('spanScale', () => {
     if (!series.ok || !quota.ok) {
       return;
     }
-    expect(series.scene.scales.x?.spec).toMatchObject({ domainMin: span.start, domainMax: span.end });
-    expect(quota.scene.scales.x?.spec).toMatchObject({ domainMin: span.start, domainMax: span.end });
+    const onAxis = { domainMin: wallClock(span.start), domainMax: wallClock(span.end) };
+    expect(series.scene.scales.x?.spec).toMatchObject(onAxis);
+    expect(quota.scene.scales.x?.spec).toMatchObject(onAxis);
   });
 });
 

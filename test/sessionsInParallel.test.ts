@@ -43,8 +43,8 @@ describe('sessionsData', () => {
   it('draws a segment inset from its bucket edges, so the bars stand apart', () => {
     const rows = sessionsData([block({ session: 's1', hour: 10 })]).rows;
 
-    expect(rows.map((row) => row.t)).toEqual(['2026-09-03T10:06:00', '2026-09-03T10:54:00']);
-    expect(rows.map((row) => row.mid)).toEqual(['2026-09-03T10:30:00', '2026-09-03T10:30:00']);
+    expect(rows.map((row) => row.t)).toEqual(['2026-09-03T10:06:00.000Z', '2026-09-03T10:54:00.000Z']);
+    expect(rows.map((row) => row.mid)).toEqual(['2026-09-03T10:30:00.000Z', '2026-09-03T10:30:00.000Z']);
   });
 
   it('gives every segment a group of its own, so no area joins two bars', () => {

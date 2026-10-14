@@ -63,10 +63,10 @@ describe('GET /api/usage/sessions', () => {
       { key: 'spent' },
     ]);
     expect(payload.rows.map((row) => `${row.t} | ${row.bar}`)).toEqual([
-      '2026-09-01T02:24:00 | 0',
-      '2026-09-01T21:36:00 | 0',
-      '2026-09-02T02:24:00 | 1',
-      '2026-09-02T21:36:00 | 1',
+      '2026-09-01T02:24:00.000Z | 0',
+      '2026-09-01T21:36:00.000Z | 0',
+      '2026-09-02T02:24:00.000Z | 1',
+      '2026-09-02T21:36:00.000Z | 1',
     ]);
     // One session across both days, labelled once.
     expect(new Set(payload.rows.map((row) => row.session)).size).toBe(1);
